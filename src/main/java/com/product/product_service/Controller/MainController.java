@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/product")
+@CrossOrigin
 public class MainController
 {
 
@@ -41,3 +42,4 @@ public class MainController
 
 
 }
+
