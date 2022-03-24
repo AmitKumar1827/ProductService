@@ -10,7 +10,7 @@ public interface ProductService {
     List<ProductEntity> getAllProducts();
     List<ProductEntity> getAllProductsByCategory(String productCategory);
     ProductEntity getProductById(Integer id);
-    void addProducts(ProductEntity product);
+    Boolean addProducts(ProductEntity product);
     void updateProducts(ProductEntity product);
     void deleteProducts(ProductEntity product);
 

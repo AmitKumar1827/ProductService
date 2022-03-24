@@ -3,13 +3,13 @@ package com.product.product_service.Service;
 
 import com.product.product_service.Entity.ProductEntity;
 import com.product.product_service.FiegnInterface.MerchantInterface;
-import com.product.product_service.Pojo.Merchant;
 import com.product.product_service.Repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductImpl implements ProductService{
@@ -20,6 +20,9 @@ public class ProductImpl implements ProductService{
 
     @Autowired
     MerchantInterface merchantInterface;
+
+
+
 
 
 
@@ -39,31 +42,20 @@ public class ProductImpl implements ProductService{
 
     @Override
     public List<ProductEntity> getAllProductsByCategory(String productCategory) {
-        List<ProductEntity> productEntityList=new ArrayList<>();
-        List<ProductEntity> productEntities =  productRepo.findAll();
-        for (ProductEntity productEntity: productEntities
-                ) {
-            if(productEntity.getProductCategory().equals(productCategory)){
-                productEntityList.add(productEntity);
-            }
-           Merchant l = merchantInterface.getSellerById(324);
-            System.out.println(l);
+        List<ProductEntity> productEntities =  productRepo.findByProductCategory(productCategory);
+        if(productEntities.size()!=0){
+            return productEntities;
         }
-        return productEntityList;
-
-
+        return null;
 
     }
 
     @Override
     public ProductEntity getProductById(Integer id) {
 
-        List<ProductEntity> productEntities =  productRepo.findAll();
-        for (ProductEntity productEntity: productEntities
-             ) {
-            if(productEntity.getProductId().equals(id)){
-                return productEntity;
-            }
+        Optional<ProductEntity> productEntities =  productRepo.findById(id);
+        if(productEntities.isPresent()){
+            ProductEntity productEntity = productEntities.get();
 
         }
         return null;
@@ -73,8 +65,14 @@ public class ProductImpl implements ProductService{
     }
 
     @Override
-    public void addProducts(ProductEntity product) {
-        productRepo.save(product);
+    public Boolean addProducts(ProductEntity product) {
+
+        ProductEntity productEntity = productRepo.save(product);
+        if(productEntity.getProductId()!=null){
+            return true;
+        }else {
+            return false;
+        }
 
     }
 
