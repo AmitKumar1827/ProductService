@@ -2,22 +2,29 @@ package com.product.product_service.Service;
 
 
 import com.product.product_service.Entity.ProductEntity;
+import com.product.product_service.FiegnInterface.MerchantInterface;
+import com.product.product_service.Pojo.Merchant;
 import com.product.product_service.Repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
-import javax.management.Query;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductImpl implements ProductService{
 
     @Autowired
     ProductRepo productRepo;
+
+
+    @Autowired
+    MerchantInterface merchantInterface;
+
+
+
+
+
 
 
     @Override
@@ -39,7 +46,8 @@ public class ProductImpl implements ProductService{
             if(productEntity.getProductCategory().equals(productCategory)){
                 productEntityList.add(productEntity);
             }
-
+           Merchant l = merchantInterface.getSellerById(324);
+            System.out.println(l);
         }
         return productEntityList;
 
@@ -53,7 +61,7 @@ public class ProductImpl implements ProductService{
         List<ProductEntity> productEntities =  productRepo.findAll();
         for (ProductEntity productEntity: productEntities
              ) {
-            if(productEntity.getProductId()==id){
+            if(productEntity.getProductId().equals(id)){
                 return productEntity;
             }
 
@@ -79,4 +87,7 @@ public class ProductImpl implements ProductService{
     public void deleteProducts(ProductEntity product) {
 
     }
+
+
+
 }

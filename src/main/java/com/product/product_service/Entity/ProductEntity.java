@@ -1,17 +1,20 @@
 package com.product.product_service.Entity;
 
 
-import org.bson.codecs.pojo.annotations.BsonId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.io.Serializable;
 
 @Document(collection = "product")
 public class ProductEntity implements Serializable {
 
 
-    @BsonId
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     Integer productId;
 
     String productName;
